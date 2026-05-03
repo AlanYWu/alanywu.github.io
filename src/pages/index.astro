@@ -42,7 +42,7 @@ const featured = (await getCollection("projects"))
       {featured.map(p => (
         <li class="group">
           <a href={`/projects/${p.id}/`} class="block pt-5 pb-2 wake flex items-baseline justify-between gap-6">
-            <span class="font-serif">{p.data.title}</span>
+            <h3 class="font-serif featured-title">{p.data.title}</h3>
             <span class="font-mono text-xs text-[var(--color-mute)]">{p.data.year}</span>
           </a>
           <p class="summary pb-6 max-w-2xl">{p.data.summary}</p>

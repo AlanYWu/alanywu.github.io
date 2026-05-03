@@ -1,0 +1,45 @@
+---
+const { sketch, height = "420px", className = "" } = Astro.props as {
+  sketch: "gameOfLife" | "boids" | "neuron";
+  height?: string;
+  className?: string;
+};
+---
+<div
+  class={`p5-host relative w-full ${className}`}
+  data-sketch={sketch}
+  style={`height:${height}`}
+></div>
+
+<script>
+  import p5 from "p5";
+  import gameOfLife from "../sketches/gameOfLife.ts";
+  import boids from "../sketches/boids.ts";
+  import neuron from "../sketches/neuron.ts";
+
+  const sketches = { gameOfLife, boids, neuron } as const;
+
+  function mount(host: HTMLElement) {
+    const name = host.dataset.sketch as keyof typeof sketches;
+    const fn = sketches[name];
+    if (!fn) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const instance = new p5(fn, host);
+    if (reduced) instance.noLoop();
+
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting && !reduced) instance.loop();
+        else instance.noLoop();
+      }
+    }, { threshold: 0.05 });
+    io.observe(host);
+  }
+
+  document.querySelectorAll<HTMLElement>(".p5-host").forEach(mount);
+</script>
+
+<style>
+  .p5-host { overflow: hidden; }
+  .p5-host :global(canvas) { display: block; }
+</style>

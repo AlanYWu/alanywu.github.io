@@ -1,0 +1,53 @@
+---
+import Layout from "../layouts/Layout.astro";
+import P5Sketch from "../components/P5Sketch.astro";
+import { getCollection } from "astro:content";
+
+const featured = (await getCollection("projects"))
+  .filter(p => p.data.featured)
+  .sort((a, b) => b.data.year - a.data.year);
+---
+<Layout current="home">
+  <section class="relative pt-10 md:pt-16">
+    <div class="absolute inset-0 -z-10 opacity-60 pointer-events-none">
+      <P5Sketch sketch="gameOfLife" height="520px" />
+    </div>
+
+    <h1 class="font-serif text-5xl md:text-7xl leading-[1.05] tracking-tight max-w-3xl">
+      One <span class="text-[var(--color-life)]">cell</span>.
+      One <span class="text-[var(--color-life)]">neuron</span>.
+      One <span class="text-[var(--color-life)]">rule</span>.<br/>
+      <span class="text-[var(--color-mute)]">Then everything else.</span>
+    </h1>
+
+    <p class="mt-8 max-w-xl font-serif text-lg leading-relaxed text-[var(--color-ink)]/80">
+      I'm <span class="grow-line wake font-medium">Alan Wu</span>, a Cornell
+      undergrad working at the intersection of neuroscience, AI, and
+      accessibility. Brain-computer interfaces, multimodal models for Chinese
+      braille, plant signaling, fly brains. I want to use AI and ML to make the
+      world more accessible and more creative. Move your cursor across the
+      page; the cells will notice.
+    </p>
+
+    <div class="mt-10 flex gap-6 font-mono text-sm">
+      <a href="/projects/" class="grow-line wake">→ projects</a>
+      <a href="/updates/" class="grow-line wake">→ weekly updates</a>
+      <a href="/about/"   class="grow-line wake">→ about</a>
+    </div>
+  </section>
+
+  <section class="mt-32">
+    <h2 class="font-mono text-xs uppercase tracking-[0.2em] text-[var(--color-mute)] mb-8">featured</h2>
+    <ul class="divide-y divide-[var(--color-rule)]">
+      {featured.map(p => (
+        <li class="group">
+          <a href={`/projects/${p.id}/`} class="block py-6 wake flex items-baseline justify-between gap-6">
+            <span class="font-serif text-2xl md:text-3xl">{p.data.title}</span>
+            <span class="font-mono text-xs text-[var(--color-mute)]">{p.data.year}</span>
+          </a>
+          <p class="text-[var(--color-mute)] -mt-3 pb-6 max-w-2xl">{p.data.summary}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Layout>

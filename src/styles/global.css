@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #FAFAF7;
+  --color-ink: #0F0F0F;
+  --color-mute: #6B6B66;
+  --color-rule: #E5E3DC;
+  --color-life: #1FAA59;
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  html {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--color-life); color: var(--color-paper); }
+  a { text-decoration: none; }
+}
+
+.wake {
+  transition: transform .35s cubic-bezier(.2,.7,.2,1),
+              color .25s ease,
+              letter-spacing .35s ease,
+              background .25s ease;
+}
+.wake:hover {
+  color: var(--color-life);
+  letter-spacing: .01em;
+}
+
+.grow-line {
+  background-image: linear-gradient(var(--color-life), var(--color-life));
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  transition: background-size .5s cubic-bezier(.2,.7,.2,1);
+}
+.grow-line:hover { background-size: 100% 1px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .wake, .grow-line { transition: none; }
+}

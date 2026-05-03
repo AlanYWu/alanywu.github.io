@@ -1,0 +1,59 @@
+---
+const {
+  user = "ayw34",
+  host = "cornell.edu",
+  label = "email",
+  showAddress = false,
+  className = "",
+} = Astro.props as {
+  user?: string;
+  host?: string;
+  label?: string;
+  showAddress?: boolean;
+  className?: string;
+};
+---
+<button
+  type="button"
+  class={`email-link inline-flex items-baseline gap-1 cursor-pointer ${className}`}
+  data-u={user}
+  data-h={host}
+  aria-label={`Send email to ${user} at ${host}`}
+>
+  {showAddress ? (
+    <span class="font-mono">
+      <span>{user}</span>
+      <span class="text-[var(--color-mute)]"> [at] </span>
+      <span>{host.split(".").join(" [dot] ")}</span>
+    </span>
+  ) : (
+    <span>{label}</span>
+  )}
+</button>
+
+<script>
+  function reveal(btn: HTMLButtonElement) {
+    const u = btn.dataset.u, h = btn.dataset.h;
+    if (!u || !h) return;
+    const addr = `${u}@${h}`;
+    const showing = btn.querySelector(".font-mono");
+    if (showing) {
+      showing.replaceChildren(document.createTextNode(addr));
+    }
+    window.location.href = `mailto:${addr}`;
+  }
+
+  document.querySelectorAll<HTMLButtonElement>(".email-link").forEach(btn => {
+    btn.addEventListener("click", () => reveal(btn));
+  });
+</script>
+
+<style>
+  .email-link {
+    background: none;
+    border: 0;
+    padding: 0;
+    color: inherit;
+    font: inherit;
+  }
+</style>

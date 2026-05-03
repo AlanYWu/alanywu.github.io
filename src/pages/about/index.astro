@@ -1,0 +1,41 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import P5Sketch from "../../components/P5Sketch.astro";
+import EmailLink from "../../components/EmailLink.astro";
+---
+<Layout title="about · alan wu" current="about">
+  <header class="pt-10 max-w-2xl">
+    <h1 class="font-serif text-4xl md:text-5xl tracking-tight">About</h1>
+  </header>
+
+  <div class="mt-10 grid md:grid-cols-[1fr_320px] gap-10">
+    <div class="font-serif text-lg leading-relaxed text-[var(--color-ink)]/85 max-w-2xl space-y-6">
+      <p>
+        I'm Alan, a Cornell undergraduate (CALS, 2024–27) studying biological
+        science and computer science. I keep coming back to one question:
+        <em>how does a small thing become a large thing without anyone planning it?</em>
+      </p>
+      <p>
+        My work lives at the intersection of neuroscience, AI, and accessibility.
+        Right now: terpene-mediated plant signaling at the
+        <span class="grow-line">Kessler Lab</span>, whole-brain Drosophila imaging
+        at the Institute of Biophysics (CAS), brain-computer interfaces through
+        Cognify and the Cornell XR / Cornell Assistive Technologies project teams,
+        and Vision-Braille, a multimodal OCR / LLM pipeline that brings written
+        Chinese braille back into Chinese.
+      </p>
+      <p>
+        I want to use AI and machine learning to make the world more accessible
+        and more creative, to build a better future for everyone.
+      </p>
+
+      <ul class="font-mono text-sm space-y-1 mt-8">
+        <li class="flex items-baseline gap-2"><span class="text-[var(--color-mute)]">email ·</span><EmailLink showAddress={true} className="grow-line wake" /></li>
+      </ul>
+    </div>
+
+    <aside class="border border-[var(--color-rule)] rounded-sm">
+      <P5Sketch sketch="neuron" height="320px" />
+    </aside>
+  </div>
+</Layout>

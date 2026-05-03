@@ -1,0 +1,24 @@
+---
+const { current = "" } = Astro.props as { current?: string };
+const links = [
+  { href: "/",          label: "home" },
+  { href: "/projects/", label: "projects" },
+  { href: "/research/", label: "research" },
+  { href: "/updates/",  label: "updates" },
+  { href: "/blog/",     label: "blog" },
+  { href: "/about/",    label: "about" },
+];
+---
+<nav class="flex items-baseline justify-between py-6 px-6 md:px-10 text-sm font-mono">
+  <a href="/" class="wake font-medium tracking-tight">alan&nbsp;wu<span class="text-[var(--color-life)]">.</span></a>
+  <ul class="flex gap-5 md:gap-7 text-[var(--color-mute)]">
+    {links.slice(1).map(l => (
+      <li>
+        <a
+          href={l.href}
+          class={`grow-line wake ${current === l.label ? "text-[var(--color-ink)]" : ""}`}
+        >{l.label}</a>
+      </li>
+    ))}
+  </ul>
+</nav>

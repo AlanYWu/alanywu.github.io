@@ -1,0 +1,21 @@
+---
+title: "Vision-Braille"
+summary: "Multimodal OCR + LLM pipeline that translates written Chinese braille back into readable Chinese, dropping tone-confusion from 90% to under 5%."
+year: 2024
+tags: ["multimodal", "ocr", "llm", "accessibility", "chinese-braille"]
+demo: "https://arxiv.org/abs/2407.06048"
+featured: true
+---
+
+A multimodal OCR + LLM pipeline that takes scanned Chinese braille and produces
+readable, tone-correct Chinese, so visually impaired students can produce text
+their sighted teachers can grade.
+
+The hard part is tone. Standard Chinese braille drops tone marks for speed,
+which makes traditional rule-based decoding ambiguous about 90% of the time.
+A learned context model brings that confusion rate to under 5%.
+
+Recognized as a **Spotlight Project** at the NeurIPS High School Project Track
+(top 20 of 335 submissions). Mentored independent research at Peking University.
+
+Preprint: [arXiv:2407.06048](https://arxiv.org/abs/2407.06048).

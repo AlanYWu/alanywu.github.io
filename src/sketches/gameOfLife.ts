@@ -5,12 +5,48 @@ export default function gameOfLife(p: p5) {
   let cols = 0, rows = 0;
   let grid: Uint8Array, next: Uint8Array;
   let mouseCell = { x: -1, y: -1 };
-  let stepEvery = 6, frame = 0;
+  const stepEvery = 6;
+  let frame = 0;
+
+  const POP_WINDOW = 18;
+  const popHistory: number[] = [];
+  let stepsSinceInjection = 0;
 
   const idx = (x: number, y: number) => ((x + cols) % cols) + ((y + rows) % rows) * cols;
 
   function seed() {
     for (let i = 0; i < grid.length; i++) grid[i] = Math.random() < 0.18 ? 1 : 0;
+    popHistory.length = 0;
+    stepsSinceInjection = 0;
+  }
+
+  // 8 orientations of a glider, encoded as relative cells
+  const GLIDERS: ReadonlyArray<ReadonlyArray<[number, number]>> = [
+    [[1,0],[2,1],[0,2],[1,2],[2,2]],
+    [[0,1],[1,2],[0,0],[1,0],[2,0]],
+    [[1,2],[0,1],[2,0],[1,0],[0,0]],
+    [[2,1],[1,0],[0,2],[1,2],[2,2]],
+    [[0,0],[2,1],[0,1],[1,2],[2,2]],
+    [[2,0],[0,1],[2,1],[1,2],[0,2]],
+    [[2,2],[0,1],[2,1],[1,0],[0,0]],
+    [[0,2],[2,1],[0,1],[1,0],[2,0]],
+  ];
+
+  function injectGlider() {
+    const g = GLIDERS[Math.floor(Math.random() * GLIDERS.length)];
+    const x0 = Math.floor(Math.random() * cols);
+    const y0 = Math.floor(Math.random() * rows);
+    for (const [dx, dy] of g) grid[idx(x0 + dx, y0 + dy)] = 1;
+    stepsSinceInjection = 0;
+  }
+
+  function injectRandomCells(count: number) {
+    for (let i = 0; i < count; i++) {
+      const x = Math.floor(Math.random() * cols);
+      const y = Math.floor(Math.random() * rows);
+      grid[idx(x, y)] = 1;
+    }
+    stepsSinceInjection = 0;
   }
 
   p.setup = () => {
@@ -41,7 +77,6 @@ export default function gameOfLife(p: p5) {
   p.mouseMoved = () => {
     mouseCell.x = Math.floor(p.mouseX / CELL);
     mouseCell.y = Math.floor(p.mouseY / CELL);
-    // breathe life into nearby dead cells
     for (let dx = -1; dx <= 1; dx++)
       for (let dy = -1; dy <= 1; dy++) {
         const i = idx(mouseCell.x + dx, mouseCell.y + dy);
@@ -50,6 +85,7 @@ export default function gameOfLife(p: p5) {
   };
 
   function step() {
+    let pop = 0;
     for (let y = 0; y < rows; y++) {
       for (let x = 0; x < cols; x++) {
         let n = 0;
@@ -59,10 +95,27 @@ export default function gameOfLife(p: p5) {
             n += grid[idx(x + dx, y + dy)];
           }
         const i = idx(x, y);
-        next[i] = grid[i] ? (n === 2 || n === 3 ? 1 : 0) : (n === 3 ? 1 : 0);
+        const alive = grid[i] ? (n === 2 || n === 3 ? 1 : 0) : (n === 3 ? 1 : 0);
+        next[i] = alive;
+        pop += alive;
       }
     }
     [grid, next] = [next, grid];
+
+    popHistory.push(pop);
+    if (popHistory.length > POP_WINDOW) popHistory.shift();
+    stepsSinceInjection++;
+
+    if (popHistory.length === POP_WINDOW && stepsSinceInjection > POP_WINDOW) {
+      let lo = popHistory[0], hi = popHistory[0];
+      for (const v of popHistory) { if (v < lo) lo = v; if (v > hi) hi = v; }
+      const stagnant = hi - lo <= 2;
+      const sparse = pop < (cols * rows) * 0.02;
+      if (stagnant) {
+        injectGlider();
+        if (sparse) injectRandomCells(Math.floor(cols * rows * 0.04));
+      }
+    }
   }
 
   p.draw = () => {

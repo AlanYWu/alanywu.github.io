@@ -7,7 +7,7 @@ const fmt = (d: Date) => d.toLocaleDateString("en-US", { month: "short", day: "n
 ---
 <Layout title="blog · alan wu" current="blog">
   <header class="pt-10 max-w-2xl">
-    <h1 class="font-serif text-4xl md:text-5xl tracking-tight">Blog</h1>
+    <h1 class="font-serif">Blog</h1>
     <p class="mt-3 text-[var(--color-mute)]">Essays. Half-formed thoughts that grew into longer ones.</p>
   </header>
 
@@ -15,9 +15,9 @@ const fmt = (d: Date) => d.toLocaleDateString("en-US", { month: "short", day: "n
     {posts.map(p => (
       <li>
         <a href={`/blog/${p.id}/`} class="block py-8 group wake">
-          <h2 class="font-serif text-2xl group-hover:text-[var(--color-life)] transition-colors">{p.data.title}</h2>
+          <h2 class="font-serif group-hover:text-[var(--color-life)] transition-colors">{p.data.title}</h2>
           <p class="font-mono text-xs text-[var(--color-mute)] mt-2">{fmt(p.data.date)}</p>
-          <p class="mt-3 text-[var(--color-mute)] max-w-2xl">{p.data.summary}</p>
+          <p class="summary mt-3 max-w-2xl">{p.data.summary}</p>
         </a>
       </li>
     ))}

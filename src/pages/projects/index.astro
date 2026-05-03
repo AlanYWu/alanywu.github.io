@@ -7,7 +7,7 @@ const projects = (await getCollection("projects")).sort((a, b) => b.data.year - 
 ---
 <Layout title="projects · alan wu" current="projects">
   <header class="pt-10">
-    <h1 class="font-serif text-4xl md:text-5xl tracking-tight">Projects</h1>
+    <h1 class="font-serif">Projects</h1>
     <p class="mt-3 text-[var(--color-mute)] max-w-xl">
       Each project is one boid. Move your mouse; they'll come find you.
     </p>
@@ -20,12 +20,12 @@ const projects = (await getCollection("projects")).sort((a, b) => b.data.year - 
   <ul class="grid md:grid-cols-2 gap-x-10 gap-y-2 divide-y divide-[var(--color-rule)] md:divide-y-0">
     {projects.map(p => (
       <li class="md:border-b md:border-[var(--color-rule)]">
-        <a href={`/projects/${p.id}/`} class="group block py-6 wake">
+        <a href={`/projects/${p.id}/`} class="group block py-5 wake">
           <div class="flex items-baseline justify-between gap-4">
-            <h3 class="font-serif text-2xl group-hover:text-[var(--color-life)] transition-colors">{p.data.title}</h3>
+            <h3 class="font-serif group-hover:text-[var(--color-life)] transition-colors">{p.data.title}</h3>
             <span class="font-mono text-xs text-[var(--color-mute)]">{p.data.year}</span>
           </div>
-          <p class="mt-2 text-[var(--color-mute)]">{p.data.summary}</p>
+          <p class="summary mt-2">{p.data.summary}</p>
           <div class="mt-3 flex flex-wrap gap-2 font-mono text-[10px] uppercase tracking-wider text-[var(--color-mute)]">
             {p.data.tags.map(t => <span class="border border-[var(--color-rule)] px-2 py-0.5 rounded-full">{t}</span>)}
           </div>

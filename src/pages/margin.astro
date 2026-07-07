@@ -1,0 +1,67 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const CALENDLY = "https://calendly.com/alanyowu/30min";
+---
+<Layout
+  title="Margin: AI copilot for dealer-group CFOs"
+  description="Margin answers every dealer-finance question with a verbatim quote and page citation from an OEM accounting manual or NADA benchmark, or refuses on the record. Built by Alan Wu, a Cornell engineer currently interviewing dealer finance people."
+  current=""
+>
+  <section class="pt-10 md:pt-16 max-w-3xl">
+    <p class="font-mono text-xs uppercase tracking-[0.2em] text-[var(--color-mute)] mb-6">
+      cite or refuse
+    </p>
+
+    <h1 class="font-serif hero">
+      <span class="text-[var(--color-life)]">Margin</span> is an AI copilot for dealer-group CFOs.
+    </h1>
+
+    <p class="mt-8 max-w-2xl font-serif text-lg leading-relaxed text-[var(--color-ink)]/80">
+      Every answer is a verbatim quote with a page citation from an OEM accounting
+      manual or NADA benchmark, or a refusal on the record when the source
+      doesn't say so. The hard rule <em>is</em> the product.
+    </p>
+  </section>
+
+  <section class="mt-24 max-w-2xl">
+    <h2 class="font-mono text-xs uppercase tracking-[0.2em] text-[var(--color-mute)] mb-6">
+      why this exists
+    </h2>
+    <p class="summary">
+      The factory statement tells a dealer an expense is 5% of gross. What it
+      won't tell you is <em>which</em> gross. The number can pull from a
+      different page than the one you're reading, so controllers and CFOs back
+      into it by hand, every month. Margin reads the OEM Dealer Standard
+      Accounting Manuals, the NADA benchmarks, and the regulatory references,
+      then answers with the exact page that defines the number, side by side
+      with the source.
+    </p>
+  </section>
+
+  <section class="mt-20 max-w-2xl">
+    <h2 class="font-mono text-xs uppercase tracking-[0.2em] text-[var(--color-mute)] mb-6">
+      who's building it
+    </h2>
+    <p class="summary">
+      I'm <span class="grow-line wake font-medium">Alan Wu</span>, a Cornell
+      engineer building Margin. It's early. No polished product yet, and this
+      isn't a sales pitch. I'm talking to controllers, dealer-group CFOs, and
+      the CPA firms who serve them so I build something that earns its place in
+      your month-end. If you live in the factory statement, I'd value 20 minutes
+      on how you close and reconcile it.
+    </p>
+  </section>
+
+  <section class="mt-20 mb-24 max-w-2xl">
+    <div class="border-t border-[var(--color-rule)] pt-8">
+      <p class="font-serif text-lg text-[var(--color-ink)]/90 mb-6">
+        20 minutes, no pitch. Just tell me where the statement lies to you.
+      </p>
+      <div class="flex flex-wrap gap-6 font-mono text-sm">
+        <a href={CALENDLY} class="grow-line wake">&rarr; book a time</a>
+        <a href="/" class="grow-line wake text-[var(--color-mute)]">&rarr; more about me</a>
+      </div>
+    </div>
+  </section>
+</Layout>

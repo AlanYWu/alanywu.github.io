@@ -1,0 +1,14 @@
+---
+week: "2026-W38"
+date: 2026-09-20
+title: "TODO: pick a title"
+mood: "TODO"
+---
+
+- Explored instruction steering for TTS, then switched to Serena's plain reading after listening tests. **Fixed cache invalidation** that was serving stale audio when voices changed.
+- **Accelerated TTS with CUDA graphs** — faster-qwen3-tts cuts latency from 2.6s to 315ms per second of audio.
+- Moved TTS and OCR services to on-demand with idle timeouts, freed ~4GB GPU when not in use.
+- Merged realtime-pipeline into the BCI project, updated Quest setup documentation, refreshed ML classifier results (11 subjects, up from 4).
+- Added hypothesis-test framing to experiment proposals so claims have predefined criteria and explicit scope.
+
+{/* TODO (Alan): add a "Next week:" bullet and any reflections you want. */}
